@@ -1,6 +1,15 @@
-import $ from 'jquery';
-window.$ = window.jQuery = $;
+/* eslint-disable no-unused-vars, no-unused-expressions */
 
-$.get('http://localhost:3000/api/sample', (res) => {
-  console.log('Response from sample api: ', res);
-});
+if ( 'undefined' === typeof window.$ ) {
+	window.$ = window.jQuery;
+}
+
+'use strict';
+
+$( () => {
+
+	console.log( 'Intialaize Main' );
+
+} );
+
+/* eslint-enable */

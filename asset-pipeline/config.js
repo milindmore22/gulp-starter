@@ -9,21 +9,28 @@ export const isProd = argv.prod;
 
 export const ROOT_DIR = normalize(join(__dirname, '..'));
 export const SRC_DIR = join(ROOT_DIR, 'src');
-export const DIST_DIR = 'dist';
-export const DEST_DIR = join(ROOT_DIR, DIST_DIR, env);
-
-export const html = {
-  src: '.',
-  dest: '.',
-  glob: '**/*.html',
-  cacheName: 'html-task'
-};
+export const DIST_DIR = 'build';
+export const DEST_DIR = join(ROOT_DIR, DIST_DIR );
 
 export const assets = {
   src: '.',
   dest: '.',
   glob: '{favicon.ico,robots.txt,sitemap.xml}',
   cacheName: 'assets-task'
+};
+
+export const libsjs = {
+  src: 'js/libs',
+  dest: 'js/libs',
+  fileName:   '*.js',
+  cacheName: 'libsjs-task'
+};
+
+export const adminjs = {
+  src: 'js/admin',
+  dest: 'js/admin',
+  fileName:   '*.js',
+  cacheName: 'adminjs-task'
 };
 
 export const js = {
@@ -46,7 +53,7 @@ export const js = {
 };
 
 export const css = {
-  src: 'css',
+  src: 'sass',
   dest: 'css',
   glob: '**/*.scss',
   cacheName: 'css-task',
@@ -71,16 +78,16 @@ export const css = {
 };
 
 export const images = {
-  src: '.',
+  src: 'img',
   dest: 'images',
-  glob: '**/*.+(png|jpg|jpeg|gif|bmp|svg)',
+  glob: '**/*.+(png|jpg|jpeg|gif|bmp|svg|ico)',
   cacheName: 'images-task'
 };
 
 export const fonts = {
-  src: '.',
+  src: 'fonts',
   dest: 'fonts',
-  glob: '**/*.+(eot|ttf|woff|woff2|otf)',
+  glob: '**/*.+(otf|eot|ttf|woff|woff2|svg)',
   cacheName: 'fonts-task'
 };
 
@@ -93,7 +100,7 @@ export const cssLint = {
   cacheName: 'css-lint-task',
   // Ignore files / folders from being linted. Note for `stylelint` you have to edit `.stylelintrc`
   // ignoreFiles attribute.
-  ignoreGlob: '**/css/vendor/**'
+  ignoreGlob: '**/sass/vendor/**/*.*'
 };
 
 export const jsLint = {
@@ -109,7 +116,7 @@ export const rev = {
   manifestFile: 'rev-manifest.json',
   assets: {
     glob: '**/*',
-    ignoreGlob: '**/*.+(html|map)'
+    ignoreGlob: '**/*.+(html|map|jpg|jpeg|png|gif|svg)'
   },
   updateReferences: {
     glob: '**/*.+(html|css|js)'
@@ -124,7 +131,7 @@ export const sizeReport = {
 
 export const watch = {
   // javascript wathing handled in the javascripts task
-  watchableTasks: ['html', 'assets', 'fonts', 'images', 'css']
+  watchableTasks: [ 'assets', 'fonts', 'images', 'css']
 };
 
 export const browserSync = {
@@ -143,14 +150,13 @@ export const prodTasks = [
     'css-lint'
   ],
   [
-    'html',
     'fonts',
     'images',
     'css',
-    'js'
+    'js',
+    'adminjs',
+    'libsjs'
   ],
-  'rev-assets',
-  'rev-update-references',
   'assets',
   'size-report'
 ];
@@ -158,12 +164,13 @@ export const prodTasks = [
 export const devTasks = [
   'clean',
   [
-    'html',
     'assets',
     'fonts',
     'images',
     'css',
-    'js'
+    'js',
+    'adminjs',
+    'libsjs'
   ],
   'watch'
 ];

@@ -1,9 +1,14 @@
 {
-  "ignoreFiles": "src/css/vendor/**",
+  "ignoreFiles": "src/sass/vendor/**",
   "extends": "stylelint-config-standard",
   "rules": {
-    "block-no-empty": null,
-    "at-rule-empty-line-before": null,
-    "rule-non-nested-empty-line-before": null
+    "block-no-empty": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "declaration-no-important": true,
+    "font-weight-notation": "numeric",
+    "max-empty-lines": 1,
+    "selector-max-specificity": "0,3,1",
+    "selector-pseudo-element-colon-notation": "double",
+    "indentation" : "tab",
   }
 }

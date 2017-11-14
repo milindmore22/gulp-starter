@@ -1,16 +1,18 @@
-# A fully featured asset pipeline based on gulp.
+# A fully featured asset pipeline based on gulp For WordPress Theme.
 
 Gulp Starter applies community best practices and allows you to quick start your next project /
 explore a new library's API without worrying too much about automatization tasks.
 
 It is **project structure agnostic**. You can use any folder structure you like (the current one, component based etc).
 
-You dont have to wait seconds until the re-compilation process is done, all tasks has 
+You dont have to wait seconds until the re-compilation process is done, all tasks has
 **incremental build optimalization**.
 
 It is **backend agnostic**, you can use the opt-in sample api or any existing backend api.
 
-This project is inspired by [vigetlabs/gulp-starter](https://github.com/vigetlabs/gulp-starter).
+This project is inspired by
+[vigetlabs/gulp-starter](https://github.com/vigetlabs/gulp-starter).
+[tsm91/gulp-starter/](https://github.com/tsm91/gulp-starter/)
 
 ```bash
 git clone https://github.com/vigetlabs/gulp-starter.git MyApp
@@ -25,7 +27,7 @@ cd MyApp && npm i
   - [CSSNext](http://cssnext.io/) - Use tomorrow’s CSS syntax, today.
   - CSS linting with [stylelint](http://stylelint.io/), [doiuse](http://www.doiuse.com/) and [colorguard](https://github.com/SlexAxton/css-colorguard)
   - Sourcemaps
-- **JS:** 
+- **JS:**
   - Modular ES6 with [Babel](http://babeljs.io/)
   - [Stage 1](https://github.com/tc39/ecma262#current-proposals) features
   - JS linting with [eslint](http://eslint.org/)
@@ -99,3 +101,98 @@ proxy: 'example.com',
 #### Why Browserify?
 [Why not?](https://gist.github.com/substack/68f8d502be42d5cd4942) I have abosuletly no problem with browserify.
 
+## Customizations
+### Removed Packages
+ - eslint-config-airbnb removed airbnb eslint stanadard.
+
+#### Additional Packages
+
+- postcss-pxtorem Added package to convert pixel to css.
+- eslint-config-wordpress Added package to for wordpress js stanarads
+
+
+### Config Changes
+
+- Updated Eslint confoguration file
+```js
+
+{
+    "extends": "wordpress",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true,
+            "arrowFunctions": true,
+            "blockBindings": true,
+            "classes": true,
+            "defaultParams": true,
+            "modules": true
+        },
+        "sourceType": "module"
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "commonjs": true,
+        "jquery": true
+    },
+    "rules": {
+        "camelcase": [1],
+        "space-in-parens": [1, "always"],
+        "no-trailing-spaces": [1],
+        "spaced-comment": [0],
+        "padded-blocks": [0],
+        "prefer-template": [0],
+        "max-len": [0],
+        "no-else-return": [0],
+        "func-names": [0],
+        "object-shorthand": [0]
+    }
+}
+
+```
+ - Stylelint file config rules
+
+```js
+{
+  "ignoreFiles": "src/css/vendor/**",
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "block-no-empty": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "declaration-no-important": true,
+    "font-weight-notation": "numeric",
+    "max-empty-lines": 1,
+    "selector-max-specificity": "0,3,1",
+    "selector-pseudo-element-colon-notation": "double"
+  }
+}
+
+```
+- asset-pipline config file removed rev task from prod tasks.
+- asset-pipline css task added preprocessor to convert `px` to `rem`
+
+```js
+const processors = [
+  cssnext({
+    warnForDuplicates: false
+  }),
+  autoprefixer({
+    browsers: css.autoprefixerBrowsers
+  }),
+  assets({
+    basePath: DEST_DIR,
+    loadPaths: css.postCSSAssetsLoadPaths
+  }),
+  pxtorem( {
+    rootValue: 16,
+    unitPrecision: 5,
+    propList: [ '*' ],
+    selectorBlackList: [],
+    replace: true,
+    mediaQuery: true,
+    minPixelValue: 2
+  } )
+];
+```

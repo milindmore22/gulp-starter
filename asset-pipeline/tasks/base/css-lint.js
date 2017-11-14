@@ -16,10 +16,6 @@ const paths = {
 };
 
 const processors = [
-  doiuse({
-    browsers: css.autoprefixerBrowsers,
-    ignoreFiles: [cssLint.ignoreGlob]
-  }),
   filterStream(cssLint.ignoreGlob, colorguard()),
   stylelint(),
   reporter({ clearMessages: true })

@@ -12,6 +12,7 @@ import progeny from 'gulp-progeny';
 import flatten from 'gulp-flatten';
 import assets from 'postcss-assets';
 import cssnext from 'postcss-cssnext';
+import pxtorem from 'postcss-pxtorem';
 import autoprefixer from 'autoprefixer';
 
 const paths = {
@@ -29,7 +30,16 @@ const processors = [
   assets({
     basePath: DEST_DIR,
     loadPaths: css.postCSSAssetsLoadPaths
-  })
+  }),
+  pxtorem( {
+    rootValue: 16,
+    unitPrecision: 5,
+    propList: [ '*' ],
+    selectorBlackList: [],
+    replace: true,
+    mediaQuery: true,
+    minPixelValue: 2
+  } )
 ];
 
 if (isProd) processors.push(cssnano({ discardComments: { removeAll: true } }));
